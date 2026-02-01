@@ -10,6 +10,7 @@
 
         <!-- Entity Classes -->
         <class>indradwiprabowo.jpa.entity.Customer</class>
+        <class>indradwiprabowo.jpa.entity.Categories</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

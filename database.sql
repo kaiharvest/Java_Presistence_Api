@@ -13,3 +13,13 @@ ALTER TABLE customers
     ADD COLUMN primary_email VARCHAR(150);
 
 SELECT * FROM customers;
+
+
+CREATE TABLE categories
+(
+    id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name        VARCHAR(100) NOT NULL,
+    description VARCHAR(500)
+) ENGINE InnoDB;
+
+SELECT * FROM categories;

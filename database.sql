@@ -16,6 +16,9 @@ ALTER TABLE customers
 ADD COLUMN age TINYINT,
     ADD COLUMN married BOOLEAN;
 
+ALTER TABLE customers
+ADD COLUMN type VARCHAR(50);
+
 SELECT * FROM customers;
 
 

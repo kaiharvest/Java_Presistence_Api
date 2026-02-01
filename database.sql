@@ -12,6 +12,10 @@ CREATE TABLE customers
 ALTER TABLE customers
     ADD COLUMN primary_email VARCHAR(150);
 
+ALTER TABLE customers
+ADD COLUMN age TINYINT,
+    ADD COLUMN married BOOLEAN;
+
 SELECT * FROM customers;
 
 
@@ -21,5 +25,9 @@ CREATE TABLE categories
     name        VARCHAR(100) NOT NULL,
     description VARCHAR(500)
 ) ENGINE InnoDB;
+
+ALTER TABLE categories
+    DROP COLUMN age,
+    DROP COLUMN married;
 
 SELECT * FROM categories;

@@ -8,4 +8,8 @@ CREATE TABLE customers
     name VARCHAR(255) NOT NULL
 ) ENGINE InnoDB;
 
+
+ALTER TABLE customers
+    ADD COLUMN primary_email VARCHAR(150);
+
 SELECT * FROM customers;

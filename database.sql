@@ -30,7 +30,7 @@ CREATE TABLE categories
 ) ENGINE InnoDB;
 
 ALTER TABLE categories
-    DROP COLUMN age,
-    DROP COLUMN married;
+ADD COLUMN created_at TIMESTAMP,
+    ADD COLUMN updated_at TIMESTAMP;
 
 SELECT * FROM categories;

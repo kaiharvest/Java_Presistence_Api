@@ -46,3 +46,16 @@ CREATE TABLE images
 SELECT * FROM images;
 
 DROP TABLE images;
+
+
+CREATE TABLE members
+(
+    id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email        VARCHAR(100) NOT NULL,
+    title       VARCHAR(100),
+    first_name  VARCHAR(100) NOT NULL,
+    middle_name VARCHAR(100),
+    last_name   VARCHAR(100)
+) ENGINE InnoDB;
+
+SELECT * FROM members;

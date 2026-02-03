@@ -8,7 +8,6 @@ CREATE TABLE customers
     name VARCHAR(255) NOT NULL
 ) ENGINE InnoDB;
 
-
 ALTER TABLE customers
     ADD COLUMN primary_email VARCHAR(150);
 
@@ -34,3 +33,16 @@ ADD COLUMN created_at TIMESTAMP,
     ADD COLUMN updated_at TIMESTAMP;
 
 SELECT * FROM categories;
+
+
+CREATE TABLE images
+(
+    id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name        VARCHAR(100) NOT NULL,
+    description TEXT,
+    image      MEDIUMBLOB
+) ENGINE InnoDB;
+
+SELECT * FROM images;
+
+DROP TABLE images;

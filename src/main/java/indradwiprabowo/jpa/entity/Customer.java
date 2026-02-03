@@ -13,6 +13,17 @@ public class Customer {
     @Column(name = "name")
     private String name;
 
+    @Transient
+    private String fullName;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     @Column(name = "primary_email")
     private String primary_email;
 

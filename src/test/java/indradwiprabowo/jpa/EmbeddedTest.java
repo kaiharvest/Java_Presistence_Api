@@ -24,14 +24,15 @@ public class EmbeddedTest {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        Members members = new Members();
-        members.setEmail("example.com");
 
         Name name = new Name();
         name.setTitle("Mr");
         name.setFirstName("Indra");
         name.setMiddleName("Dwi");
         name.setLastName("Prabowo");
+
+        Members members = new Members();
+        members.setEmail("example.com");
         members.setName(name);
 
         entityManager.persist(members);

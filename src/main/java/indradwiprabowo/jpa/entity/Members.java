@@ -1,6 +1,7 @@
 package indradwiprabowo.jpa.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "members")
@@ -14,6 +15,22 @@ public class Members {
 
     @Embedded
     private Name name;
+
+    @ElementCollection
+    @CollectionTable(name = "hobbies", joinColumns = @JoinColumn(
+                    name = "member_id", referencedColumnName = "id"
+    ))
+    @Column(name = "name")
+    private List<String> hobbies;
+
+
+    public List<String> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(List<String> hobbies) {
+        this.hobbies = hobbies;
+    }
 
     public Integer getId() {
         return id;

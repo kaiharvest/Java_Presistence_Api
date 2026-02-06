@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CollectionTableTest {
 
@@ -53,6 +54,24 @@ public class CollectionTableTest {
 
         Members members = entityManager.find(Members.class, 4);
         members.getHobbies().add("Traveling");
+
+        entityManager.persist(members);
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void updateSkills() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        Members members = entityManager.find(Members.class, 2);
+        members.setSkills(new HashMap<>());
+        members.getSkills().put("Java", 90);
+        members.getSkills().put("Golang", 70);
+        members.getSkills().put("PHP", 50);
 
         entityManager.persist(members);
 

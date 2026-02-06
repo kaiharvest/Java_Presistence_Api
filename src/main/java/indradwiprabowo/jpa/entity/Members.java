@@ -28,7 +28,7 @@ public class Members {
     @CollectionTable(name = "skills", joinColumns = @JoinColumn(
             name = "member_id", referencedColumnName = "id"
     ))
-    @MapKeyColumn
+    @MapKeyColumn(name = "name")
     @Column(name = "value")
     private Map<String, Integer> skills;
 

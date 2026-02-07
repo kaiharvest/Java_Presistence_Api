@@ -2,6 +2,7 @@ CREATE DATABASE belajar_java_persistence_api;
 
 USE belajar_java_persistence_api;
 
+# table customers
 CREATE TABLE customers
 (
     id   VARCHAR(255) NOT NULL PRIMARY KEY,
@@ -21,6 +22,7 @@ ADD COLUMN type VARCHAR(50);
 SELECT * FROM customers;
 
 
+# table categories
 CREATE TABLE categories
 (
     id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -35,6 +37,7 @@ ADD COLUMN created_at TIMESTAMP,
 SELECT * FROM categories;
 
 
+# table images
 CREATE TABLE images
 (
     id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -48,6 +51,7 @@ SELECT * FROM images;
 DROP TABLE images;
 
 
+# table members
 CREATE TABLE members
 (
     id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -59,8 +63,10 @@ CREATE TABLE members
 ) ENGINE InnoDB;
 
 SELECT * FROM members;
+SELECT * FROM members WHERE id = 1;
 
 
+# table departments
 CREATE TABLE departments
 (
     company_id    VARCHAR(100) NOT NULL,
@@ -71,6 +77,8 @@ CREATE TABLE departments
 
 SELECT * FROM departments;
 
+
+# table hobbies
 CREATE TABLE hobbies
 (
     id        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -84,6 +92,7 @@ DROP TABLE hobbies;
 SELECT * FROM hobbies;
 
 
+# table skills
 CREATE TABLE skills
 (
     id        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -95,3 +104,36 @@ CREATE TABLE skills
 ) ENGINE InnoDB;
 
 SELECT * FROM skills;
+
+
+# table credential
+CREATE TABLE credential
+(
+    id       VARCHAR(100) NOT NULL PRIMARY KEY,
+    email    VARCHAR(150) NOT NULL,
+    password VARCHAR(150) NOT NULL
+) ENGINE InnoDB;
+
+SELECT * FROM credential;
+
+
+# table users
+CREATE TABLE users
+(
+    id   VARCHAR(100) NOT NULL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL
+) ENGINE InnoDB;
+
+SELECT * FROM users;
+
+
+# wallet
+CREATE TABLE wallet
+(
+    id      INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(20) NOT NULL,
+    balance BIGINT      NOT NULL,
+    FOREIGN KEY fk_users_wallet (user_id) REFERENCES users (id)
+) ENGINE InnoDB;
+
+SELECT * FROM wallet;

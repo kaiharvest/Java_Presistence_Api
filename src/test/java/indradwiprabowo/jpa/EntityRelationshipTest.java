@@ -1,7 +1,7 @@
 package indradwiprabowo.jpa;
 
-import indradwiprabowo.jpa.entity.Categories;
-import indradwiprabowo.jpa.entity.Members;
+import indradwiprabowo.jpa.entity.Credential;
+import indradwiprabowo.jpa.entity.User;
 import indradwiprabowo.jpa.util.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,34 +9,42 @@ import jakarta.persistence.EntityTransaction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-
-public class EntityListenerTest {
+public class EntityRelationshipTest {
 
     @Test
-    void listener() {
+    void oneToOnePersist() {
         EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        Categories categories = new Categories();
-        categories.setName("Contoh");
+        Credential credential = new Credential();
+        credential.setId("indra");
+        credential.setEmail("indra@example.com");
+        credential.setPassword("rahasia");
+        entityManager.persist(credential);
 
-        entityManager.persist(categories);
+        User user = new User();
+        user.setId("indra");
+        user.setName("Dwi Prabowo");
+        entityManager.persist(user);
 
         entityTransaction.commit();
         entityManager.close();
     }
 
     @Test
-    void listenerEntity() {
+    void oneToOneFind() {
         EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        Members members = entityManager.find(Members.class, 1);
-        Assertions.assertEquals("Mr. Indra Dwi Prabowo", members.getFullName());
+        User user = entityManager.find(User.class, "indra");
+        Assertions.assertNotNull(user.getCredential());
+
+        Assertions.assertEquals("indra@example.com", user.getCredential().getEmail());
+        Assertions.assertEquals("rahasia", user.getCredential().getPassword());
 
         entityTransaction.commit();
         entityManager.close();

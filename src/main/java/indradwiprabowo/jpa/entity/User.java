@@ -15,6 +15,17 @@ public class User {
     @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
     private Credential credential;
 
+    @OneToOne(mappedBy = "user")
+    private Wallet wallet;
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
+    }
+
     public Credential getCredential() {
         return credential;
     }

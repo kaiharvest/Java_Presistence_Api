@@ -152,4 +152,17 @@ CREATE TABLE products
 
 SELECT * FROM products;
 
+
+# table user like product
+CREATE TABLE user_like_product
+(
+    user_id    VARCHAR(100) NOT NULL,
+    product_id VARCHAR(100) NOT NULL,
+    FOREIGN KEY fk_users_to_users_like_product (user_id) REFERENCES users (id),
+    FOREIGN KEY fk_product_to_users_like_product (product_id) REFERENCES products (id),
+    PRIMARY KEY (user_id, product_id)
+);
+
+SELECT * FROM user_like_product;
+
 SHOW TABLES;

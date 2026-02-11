@@ -1,6 +1,7 @@
 package indradwiprabowo.jpa.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 
 import java.util.Set;
 
@@ -12,7 +13,9 @@ public class Product {
     @Id
     private String id;
 
-    @ManyToOne
+    @ManyToOne (
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(
             name = "brand_id", referencedColumnName = "id"
     )

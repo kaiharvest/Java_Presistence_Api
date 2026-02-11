@@ -126,3 +126,30 @@ CREATE TABLE wallet
 ) ENGINE InnoDB;
 
 SELECT * FROM wallet;
+
+
+# table brands
+CREATE TABLE brands
+(
+    id          VARCHAR(100) NOT NULL PRIMARY KEY,
+    name        VARCHAR(100) NOT NULL,
+    description VARCHAR(500)
+);
+
+SELECT * FROM brands;
+
+
+# table productions
+CREATE TABLE products
+(
+    id          VARCHAR(100) NOT NULL PRIMARY KEY,
+    brand_id    VARCHAR(100) NOT NULL,
+    name        VARCHAR(100) NOT NULL,
+    price       BIGINT       NOT NULL,
+    description VARCHAR(500),
+    FOREIGN KEY fk_brand_products (brand_id) REFERENCES brands (id)
+);
+
+SELECT * FROM products;
+
+SHOW TABLES;

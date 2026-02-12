@@ -165,4 +165,22 @@ CREATE TABLE user_like_product
 
 SELECT * FROM user_like_product;
 
+
+CREATE TABLE employees
+(
+    id             VARCHAR(100) NOT NULL PRIMARY KEY,
+    type           VARCHAR(100) NOT NULL,
+    name           VARCHAR(100) NOT NULL,
+    total_employee INT,
+    total_manager  INT
+);
+
+SELECT * FROM employees;
+
+
+
+
+
+
+
 SHOW TABLES;

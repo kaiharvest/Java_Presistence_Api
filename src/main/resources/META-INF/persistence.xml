@@ -19,6 +19,8 @@
         <class>indradwiprabowo.jpa.entity.Product</class>
         <class>indradwiprabowo.jpa.entity.Brand</class>
         <class>indradwiprabowo.jpa.entity.Wallet</class>
+        <class>indradwiprabowo.jpa.entity.Manager</class>
+        <class>indradwiprabowo.jpa.entity.VicePresident</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

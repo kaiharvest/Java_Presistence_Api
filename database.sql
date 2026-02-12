@@ -210,6 +210,43 @@ CREATE TABLE payments_credit_card
 SELECT * FROM payments_credit_card;
 
 
+# table transaction
+CREATE TABLE transactions
+(
+    id         VARCHAR(100) NOT NULL PRIMARY KEY,
+    balance    BIGINT       NOT NULL,
+    created_at TIMESTAMP    NOT NULL
+);
+
+SELECT * FROM transactions;
+
+
+# table transaction credit
+CREATE TABLE transaction_credit
+(
+    id            VARCHAR(100) NOT NULL PRIMARY KEY,
+    balance       BIGINT       NOT NULL,
+    created_at    TIMESTAMP    NOT NULL,
+    credit_amount BIGINT       NOT NULL
+);
+
+SELECT * FROM transaction_credit;
+
+
+# table transaction debit
+CREATE TABLE transaction_debit
+(
+    id           VARCHAR(100) NOT NULL PRIMARY KEY,
+    balance      BIGINT       NOT NULL,
+    created_at   TIMESTAMP    NOT NULL,
+    debit_amount BIGINT       NOT NULL
+);
+
+
+SELECT * FROM transaction_debit;
+
+
+
 
 
 SHOW TABLES;

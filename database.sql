@@ -166,6 +166,7 @@ CREATE TABLE user_like_product
 SELECT * FROM user_like_product;
 
 
+# table employee
 CREATE TABLE employees
 (
     id             VARCHAR(100) NOT NULL PRIMARY KEY,
@@ -178,7 +179,35 @@ CREATE TABLE employees
 SELECT * FROM employees;
 
 
+# table payment
+CREATE TABLE payment
+(
+    id     VARCHAR(100) NOT NULL PRIMARY KEY,
+    amount VARCHAR(100) NOT NULL
+);
 
+SELECT * FROM payment;
+
+CREATE TABLE payment_gopay
+(
+    id VARCHAR(100) NOT NULL PRIMARY KEY,
+    gopay_id VARCHAR(100) NOT NULL ,
+    FOREIGN KEY fk_payments_gopay_to_payment (id) references payment (id)
+);
+
+SELECT * FROM payment_gopay;
+
+
+# table payment credit card
+CREATE TABLE payments_credit_card
+(
+    id          VARCHAR(100) NOT NULL PRIMARY KEY,
+    master_card VARCHAR(100) NOT NULL,
+    bank        VARCHAR(100) NOT NULL,
+    FOREIGN KEY fk_payments_credit_card_to_payment (id) REFERENCES payment (id)
+);
+
+SELECT * FROM payments_credit_card;
 
 
 

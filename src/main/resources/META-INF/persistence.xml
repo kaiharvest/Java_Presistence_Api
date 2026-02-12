@@ -21,6 +21,9 @@
         <class>indradwiprabowo.jpa.entity.Wallet</class>
         <class>indradwiprabowo.jpa.entity.Manager</class>
         <class>indradwiprabowo.jpa.entity.VicePresident</class>
+        <class>indradwiprabowo.jpa.entity.Payment</class>
+        <class>indradwiprabowo.jpa.entity.PaymentGopay</class>
+        <class>indradwiprabowo.jpa.entity.PaymentCreditCard</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

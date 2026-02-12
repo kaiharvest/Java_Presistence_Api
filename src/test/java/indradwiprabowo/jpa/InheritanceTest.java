@@ -1,8 +1,6 @@
 package indradwiprabowo.jpa;
 
-import indradwiprabowo.jpa.entity.Employee;
-import indradwiprabowo.jpa.entity.Manager;
-import indradwiprabowo.jpa.entity.VicePresident;
+import indradwiprabowo.jpa.entity.*;
 import indradwiprabowo.jpa.util.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -10,6 +8,9 @@ import jakarta.persistence.EntityTransaction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+// jika ingin query terus ke parent class nya, lebih baik pakai SINGLE TABLE inheritance karena tidak perlu join ke child class nya
+// joined table ini cocok jika query nya langsung ke table child class nya
 
 public class InheritanceTest {
 
@@ -59,6 +60,55 @@ public class InheritanceTest {
         Employee employee = entityManager.find(Employee.class, "budi");
         VicePresident vp = (VicePresident) employee;
         Assertions.assertEquals("Budi Nugraha", vp.getName());
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void joinedTableInsert() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        PaymentGopay paymentGopay = new PaymentGopay();
+        paymentGopay.setId("gopay1");
+        paymentGopay.setAmount(100_000L);
+        paymentGopay.setGopayId("089999999999");
+        entityManager.persist(paymentGopay);
+
+        PaymentCreditCard paymentCreditCard = new PaymentCreditCard();
+        paymentCreditCard.setId("cc1");
+        paymentCreditCard.setAmount(500_000L);
+        paymentCreditCard.setMasterCard("4555-5555");
+        paymentCreditCard.setBank("BCA");
+        entityManager.persist(paymentCreditCard);
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void joinedTableFind() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        PaymentGopay paymentGopay = entityManager.find(PaymentGopay.class, "gopay1");
+
+        PaymentCreditCard paymentCreditCard = entityManager.find(PaymentCreditCard.class, "cc1");
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void joinedTableFindParent() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        Payment paymentGopay = entityManager.find(Payment.class, "gopay1");
 
         entityTransaction.commit();
         entityManager.close();

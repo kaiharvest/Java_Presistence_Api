@@ -1,18 +1,12 @@
 package indradwiprabowo.jpa.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "brands")
-public class Brand {
-
-    @Id
-    private String id;
+public class Brand extends AuditableEntity<String> {
 
     private String name;
 
@@ -21,12 +15,15 @@ public class Brand {
     @OneToMany(mappedBy = "brand")
     private List<Product> product;
 
-    public String getId() {
-        return id;
+    @Version
+    private Long version;
+
+    public Long getVersion() {
+        return version;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public String getName() {

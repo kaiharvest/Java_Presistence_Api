@@ -136,6 +136,9 @@ CREATE TABLE brands
     description VARCHAR(500)
 );
 
+ALTER TABLE brands ADD COLUMN created_at TIMESTAMP, ADD COLUMN update_at TIMESTAMP;
+ALTER TABLE brands ADD COLUMN version BIGINT;
+
 SELECT * FROM brands;
 
 

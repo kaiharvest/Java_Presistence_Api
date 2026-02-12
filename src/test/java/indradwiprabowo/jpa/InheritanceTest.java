@@ -159,6 +159,7 @@ public class InheritanceTest {
         entityManager.close();
     }
 
+
     @Test
     void tablePerClassFindParent() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -168,6 +169,24 @@ public class InheritanceTest {
         // jika ingin find ke table parent dan jika child nya tidak begitu banyak lebih baik menggunakan bisa menggunakan join table strategy
         // jika child nya banyak di sarankan pakai SINGLE TABLE
         Transaction transaction = entityManager.find(Transaction.class, "t1");
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void mappedSuperclass() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        Brand brand = new Brand();
+        brand.setId("xiaomi");
+        brand.setName("Xiaomi");
+        brand.setDescription("Xiaomi Global");
+        brand.setCreatedAt(LocalDateTime.now());
+        brand.setUpdateAd(LocalDateTime.now());
+        entityManager.persist(brand);
 
         entityTransaction.commit();
         entityManager.close();

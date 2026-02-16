@@ -1,9 +1,6 @@
 package indradwiprabowo.jpa;
 
-import indradwiprabowo.jpa.entity.Brand;
-import indradwiprabowo.jpa.entity.Members;
-import indradwiprabowo.jpa.entity.Product;
-import indradwiprabowo.jpa.entity.User;
+import indradwiprabowo.jpa.entity.*;
 import indradwiprabowo.jpa.util.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -166,6 +163,45 @@ public class JpaQueryLanguagesTest {
         List<Brand> list = query.getResultList();
         for (Brand brand : list) {
             System.out.println(brand.getId());
+        }
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void selectSomeFields() {
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        TypedQuery<Object[]> query = entityManager.createQuery("select b.id, b.name from Brand b where b.name = :name", Object[].class);
+        query.setParameter("name", "Xiaomi");
+
+        List<Object[]> list = query.getResultList();
+        for (Object[] objects : list) {
+            System.out.println(objects[0] + " : " + objects[1]);
+        }
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void selectNewConstructor() {
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        TypedQuery<SimpleBrand> query = entityManager.createQuery("select new indradwiprabowo.jpa.entity.SimpleBrand(b.id, b.name)" +
+                "from Brand b where b.name = :name", SimpleBrand.class);
+        query.setParameter("name", "Xiaomi");
+
+        List<SimpleBrand> resultList = query.getResultList();
+        for (SimpleBrand simpleBrand : resultList) {
+            System.out.println(simpleBrand.getId() + " : " + simpleBrand.getName());
         }
 
         entityTransaction.commit();

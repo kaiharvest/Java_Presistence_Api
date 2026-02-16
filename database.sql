@@ -52,7 +52,6 @@ CREATE TABLE members
 ) ENGINE InnoDB;
 
 SELECT * FROM members;
-SELECT * FROM members WHERE id = 1;
 
 
 # table departments

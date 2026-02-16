@@ -1,11 +1,14 @@
 package indradwiprabowo.jpa.entity;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
 @Table(name = "brands")
+@NamedQueries({
+        @NamedQuery(name = "Brand.findALl", query = "select b from Brand b"),
+        @NamedQuery(name = "Brand.findAllByName", query = "select b from Brand b where b.name = :name")
+})
 public class Brand extends AuditableEntity<String> {
 
     private String name;

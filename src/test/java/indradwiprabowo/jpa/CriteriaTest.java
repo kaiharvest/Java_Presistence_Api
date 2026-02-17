@@ -5,10 +5,7 @@ import indradwiprabowo.jpa.entity.Product;
 import indradwiprabowo.jpa.entity.SimpleBrand;
 import indradwiprabowo.jpa.util.JpaUtil;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -163,6 +160,39 @@ public class CriteriaTest {
         // select p from Product p join p.brand b where b.name = 'Samsung'
 
         TypedQuery<Product> query = entityManager.createQuery(criteria);
+        List<Product> products = query.getResultList();
+        for (Product product : products) {
+            System.out.println(product.getId() + " : " + product.getName());
+        }
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void criteriaNamedParameter() {
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
+        Root<Product> p = criteria.from(Product.class);
+        Join<Product, Brand> b = p.join("brand");
+
+        ParameterExpression<String> brandParameter = builder.parameter(String.class, "brand");
+
+        // select p from Product p join p.brand b
+        criteria.select(p);
+        criteria.where(
+                builder.equal(b.get("name"), brandParameter)
+        );
+        // select p from Product p join p.brand b where b.name = 'Samsung'
+
+        TypedQuery<Product> query = entityManager.createQuery(criteria);
+        query.setParameter(brandParameter, "Samsung");
+
         List<Product> products = query.getResultList();
         for (Product product : products) {
             System.out.println(product.getId() + " : " + product.getName());

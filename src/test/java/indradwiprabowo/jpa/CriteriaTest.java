@@ -241,4 +241,31 @@ public class CriteriaTest {
         entityTransaction.commit();
         entityManager.close();
     }
+
+    @Test
+    void criteriaNonQuery() {
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+        CriteriaUpdate<Brand> criteria = builder.createCriteriaUpdate(Brand.class);
+        Root<Brand> b = criteria.from(Brand.class);
+
+        criteria.set(b.get("name"), "Apple Update Version");
+        criteria.set(b.get("description"), "Apple Company");
+
+        criteria.where(
+                builder.equal(b.get("id"), "apple")
+        );
+
+        Query query = entityManager.createQuery(criteria);
+        int impactedRecord = query.executeUpdate();
+        System.out.println("Success update " + impactedRecord + " records");
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
 }

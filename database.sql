@@ -136,6 +136,7 @@ CREATE TABLE brands
 );
 
 SELECT * FROM brands;
+SELECT * FROM brands where id='samsung';
 
 
 # table productions

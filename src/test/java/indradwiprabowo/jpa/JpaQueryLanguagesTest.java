@@ -288,4 +288,24 @@ public class JpaQueryLanguagesTest {
         entityManager.close();
     }
 
+    @Test
+    void nonQuery() {
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        // sangat disarankan menggunakan entityManager, update atau delete
+        // karena ketika di update fitur optimistic locking tidak mungkin bisa bekerja
+
+        Query query = entityManager.createQuery("update Brand b set b.name = :name where b.id = :id");
+        query.setParameter("name", "Samsung Updated");
+        query.setParameter("id", "samsung");
+        int impactedRecord = query.executeUpdate();
+        System.out.println("Success update " + impactedRecord + " records");
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
 }

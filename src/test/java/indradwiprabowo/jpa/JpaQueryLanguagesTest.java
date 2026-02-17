@@ -2,10 +2,7 @@ package indradwiprabowo.jpa;
 
 import indradwiprabowo.jpa.entity.*;
 import indradwiprabowo.jpa.util.JpaUtil;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -245,6 +242,46 @@ public class JpaQueryLanguagesTest {
             System.out.println("Min " + object[1]);
             System.out.println("Max " + object[2]);
             System.out.println("Avg " + object[3]);
+        }
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void nativeQuery() {
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        // walaupun tidak disarankan, karena bisa membuat kita kesulitan ketika akan mengubah database
+        // yang sedang digunakan, namun fitur ini juga bisa dilakukan di JPA
+        // dan sangat disarankan menggunakan jpa query languages dibandingkan native query
+
+        Query query = entityManager.createNativeQuery("select * from brands where brands.created_at is not null", Brand.class);
+        List<Brand> brands = query.getResultList();
+
+        for (Brand brand : brands) {
+            System.out.println(brand.getId() + " : " + brand.getName());
+        }
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void namedNativeQuery() {
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        Query query = entityManager.createNamedQuery("Brand.native.findALl", Brand.class);
+        List<Brand> brands = query.getResultList();
+
+        for (Brand brand : brands) {
+            System.out.println(brand.getId() + " : " + brand.getName());
         }
 
         entityTransaction.commit();

@@ -136,8 +136,8 @@ CREATE TABLE brands
 );
 
 SELECT * FROM brands;
-SELECT * FROM brands where id='samsung';
 
+UPDATE brands SET name = 'Samsung' WHERE id = 'samsung';
 
 # table productions
 CREATE TABLE products

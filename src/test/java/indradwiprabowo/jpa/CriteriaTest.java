@@ -1,0 +1,85 @@
+package indradwiprabowo.jpa;
+
+import indradwiprabowo.jpa.entity.Brand;
+import indradwiprabowo.jpa.entity.SimpleBrand;
+import indradwiprabowo.jpa.util.JpaUtil;
+import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+public class CriteriaTest {
+
+    @Test
+    void criteriaQuery() {
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Brand> criteria = builder.createQuery(Brand.class);
+        Root<Brand> b = criteria.from(Brand.class);
+        criteria.select(b); // select b from Brand b
+
+        TypedQuery<Brand> query = entityManager.createQuery(criteria);
+        List<Brand> brands = query.getResultList();
+        for (Brand brand : brands) {
+            System.out.println(brand.getId() + " : " + brand.getName());
+        }
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void criteriaQueryNonEntity() {
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Object[]> criteria = builder.createQuery(Object[].class);
+        Root<Brand> b = criteria.from(Brand.class);
+        criteria.select(builder.array(b.get("id"), b.get("name")));
+        // select b.id, b.name from Brand b
+
+        TypedQuery<Object[]> query = entityManager.createQuery(criteria);
+        List<Object[]> list = query.getResultList();
+        for (Object[] objects : list) {
+            System.out.println("id : " + objects[0]);
+            System.out.println("name : " + objects[1]);
+        }
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+
+    @Test
+    void criteriaQueryConstructor() {
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<SimpleBrand> criteria = builder.createQuery(SimpleBrand.class);
+        Root<Brand> b = criteria.from(Brand.class);
+        criteria.select(builder.construct(SimpleBrand.class, b.get("id"), b.get("name")));
+
+        TypedQuery<SimpleBrand> query = entityManager.createQuery(criteria);
+        List<SimpleBrand> simpleBrands = query.getResultList();
+        for (SimpleBrand simpleBrand : simpleBrands) {
+            System.out.println(simpleBrand.getId() + " " + simpleBrand.getName());
+        }
+
+        entityTransaction.commit();
+        entityManager.close();
+    }
+}
